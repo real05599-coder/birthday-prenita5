@@ -1,148 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Special Memories</title>
-  <style>
-    /* Basic reset and styling */
-    body {
-      margin: 0;
-      padding: 0;
-      background: #111;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      color: #fff;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 Reasons Why I Like You 💖</title>
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
 
-    /* Candle container */
-    .candle {
-      position: relative;
-      width: 20px;
-      height: 100px;
-      background: #ffcc00;
-      margin-bottom: 20px;
-      border-radius: 5px;
-    }
+.card{
+  background:rgba(255,255,255,0.95);
+  width:90%;
+  max-width:450px;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  text-align:center;
+  animation:fadeIn .8s ease;
+}
 
-    .flame {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 30px;
-      background: radial-gradient(circle, #ff0 0%, #f00 60%, transparent 80%);
-      border-radius: 50%;
-      animation: flicker 0.2s infinite alternate;
-    }
+h1{font-size:1.7rem;color:#4a1c2f;}
+p{font-size:1rem;color:#5c2a3a;}
+input{
+  padding:10px;
+  width:80%;
+  border-radius:10px;
+  border:1px solid #ccc;
+  margin-top:10px;
+  font-size:1rem;
+}
+button{
+  margin-top:15px;
+  padding:10px 22px;
+  border:none;
+  border-radius:20px;
+  background:#ff4f81;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+}
+button:hover{background:#e84370;}
+.error{
+  margin-top:10px;
+  color:#b0003a;
+  font-style:italic;
+  animation:shake .4s;
+}
 
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1); opacity: 1; }
-      50% { transform: translateX(-48%) scale(1.1); opacity: 0.9; }
-      100% { transform: translateX(-52%) scale(0.9); opacity: 1; }
-    }
+/* Cake & candles */
+.cake{font-size:2rem;margin-top:15px;}
+.candle{
+  display:inline-block;
+  margin:0 2px;
+  cursor:pointer;
+  animation:flicker 1s infinite;
+  position:relative;
+}
+.candle.blown{
+  animation:none;
+  opacity:.7;
+}
 
-    .smoke {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 10px;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      animation: smokeRise 3s infinite;
-    }
+/* Smoke animation */
+.smoke{
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.9rem;
+  animation:smokeUp .8s ease forwards;
+  pointer-events:none;
+}
+@keyframes smokeUp{
+  from{opacity:1; transform:translate(-50%,0);}
+  to{opacity:0; transform:translate(-50%,-20px);}
+}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes fadeIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-5px)}100%{transform:translateX(0)}}
 
-    @keyframes smokeRise {
-      0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.5; }
-      50% { transform: translateX(-55%) translateY(-30px) scale(1.2); opacity: 0.3; }
-      100% { transform: translateX(-50%) translateY(-60px) scale(1.5); opacity: 0; }
-    }
+/* Popup */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.popupBox{
+  background:white;
+  padding:22px;
+  border-radius:16px;
+  text-align:center;
+  width:80%;
+  max-width:300px;
+}
+.popupBox button{
+  margin:10px 5px;
+}
 
-    /* Popup for song */
-    #popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 10;
-      text-align: center;
-      padding: 20px;
-    }
+/* Diary */
+.diary{
+  background:#fff7f9;
+  padding:22px;
+  border-radius:16px;
+  cursor:pointer;
+}
+.diary h2{
+  font-family:cursive;
+  color:#7a2d44;
+}
+.diary p{
+  margin-top:10px;
+  font-style:italic;
+}
+.tap{font-size:.9rem;color:#888;margin-top:5px;}
 
-    #popup button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background: #ff3366;
-      color: #fff;
-      transition: 0.3s;
-    }
+/* Photo page */
+.photoPage img{
+  width:90%;
+  border-radius:14px;
+  margin-top:15px;
+}
+</style>
+</head>
 
-    #popup button:hover {
-      background: #ff6699;
-      transform: scale(1.05);
-    }
+<body>
+<audio id="bgMusic" loop>
+  <source src="Ve Haaniyaan Web.mp3" type="audio/mpeg">
+</audio>
 
-    /* Memories container */
-    #memories {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #ffc0cb; /* soft pink */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 1s;
-      z-index: 5;
-    }
+<div class="card" id="app"></div>
 
-    #heart {
-      font-size: 80px;
-      animation: popHeart 1s ease forwards;
-      opacity: 0;
-      color: #ff3366;
-    }
+<script>
+const app=document.getElementById("app");
+let blown=0,totalCandles=0;
+let songAsked=false,page=0;
 
-    @keyframes popHeart {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+/* 🎶 Play music */
+function playMusic(){
+  const m=document.getElementById("bgMusic");
+  m.volume=0.4;
+  m.play().catch(()=>{});
+}
 
-    #photo-container {
-      max-width: 90%;
-      max-height: 80%;
-      position: relative;
-    }
+/* 🔐 Name */
+function askName(){
+  app.innerHTML=`
+    <h1>Hey Beautiful 💕</h1>
+    <p>Enter your nickname ✨</p>
+    <input id="name" placeholder="Your nickname">
+    <br>
+    <button onclick="checkName()">Continue 💖</button>
+  `;
+}
+function checkName(){
+  if(document.getElementById("name").value.trim().toLowerCase()==="the prenita"){
+    askAge();
+  } else {
+    alert("Try again, my love 💗");
+  }
+}
 
-    #photo-container img {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 15px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      transition: opacity 1s ease, transform 0.8s ease;
-      cursor: pointer;
-    }
+/* 🎂 Age */
+function askAge(){
+  app.innerHTML=`
+    <h1>Hello, The Prenita 💫</h1>
+    <p>Tell me your age 🎂</p>
+    <input type="number" id="age" placeholder="Your age">
+    <br>
+    <button onclick="showCake()">Show Surprise 🎉</button>
+  `;
+}
 
+/* 🎂 Cake */
+function showCake(){
+  const age=parseInt(document.getElementById("age").value);
+  if(!age||age<1||age>120) return;
+  totalCandles=age; blown=0;
+  let candles="";
+  for(let i=0;i<age;i++){
+    candles+=`<span class="candle" data-blown="false" onclick="blow(this)">🕯️</span>`;
+  }
+  app.innerHTML=`
+    <h1>Happy Birthday 💖</h1>
+    <p>Tap the candles ✨</p>
+    <div class="cake">🎂<br>${candles}</div>
+  `;
+}
+
+/* 💨 Blow candle */
+function blow(c){
+  if(c.dataset.blown==="true") return;
+  c.dataset.blown="true";
+  c.classList.add("blown");
+  const smoke=document.createElement("span");
+  smoke.className="smoke";
+  smoke.innerText="💨";
+  c.appendChild(smoke);
+  blown++;
+
+  // Ask about song on first candle
+  if(blown===1 && !songAsked){
+    songAsked=true;
+    askSongPopup();
+  }
+
+  // Open photo page after all candles
+  if(blown===totalCandles){
+    setTimeout(openPhoto,800);
+  }
+}
+
+/* 💬 Song popup */
+function askSongPopup(){
+  const pop=document.createElement("div");
+  pop.className="popup";
+  pop.innerHTML=`
+    <div class="popupBox">
+      <p>Do you want to play a song? 🎶</p>
+      <button onclick="yesSong()">Yes 💖</button>
+      <button onclick="noSong()">Maybe later 🙂</button>
+    </div>
+  `;
+  document.body.appendChild(pop);
+}
+function yesSong(){ playMusic(); closePopup(); }
+function noSong(){ closePopup(); }
+function closePopup(){ document.querySelector(".popup")?.remove(); }
+
+/* 📷 Photo page */
+function openPhoto(){
+  app.innerHTML=`
+    <div class="photoPage">
+      <h1>Look at this! 💖</h1>
+      <img src="https://via.placeholder.com/350x200.png?text=Your+Photo+Here" alt="Photo">
+      <br>
+      <button onclick="openDiary()">Next 💕</button>
+    </div>
+  `;
+}
+
+/* 📖 Diary */
+const reasons=[
+"I like you because you’re kind, even when no one is watching.",
+"I like you because you listen, not just hear.",
+"I like you because you’re real—no fake vibes.",
+"I like you because you care deeply.",
+"I like you because talking to you feels easy.",
+"I like you because you respect feelings.",
+"I like you because you make me comfortable.",
+"I like you because you have a beautiful heart.",
+"I like you because you’re quietly strong.",
+"I like you because you notice small things.",
+"I like you because you’re thoughtful.",
+"I like you because you inspire me.",
+"I like you because you’re unique.",
+"I like you because I feel happy with you.",
+"And honestly… I like you because you’re you."
+];
+
+function openDiary(){
+  page=0;
+  nextPage();
+}
+
+function nextPage(){
+  if(page>=reasons.length) return;
+  app.innerHTML=`
+    <div class="diary" onclick="nextPage()">
+      <h2>Page ${page+1}</h2>
+      <p>${reasons[page]}</p>
+      <div class="tap">(tap for next page)</div>
+    </div>
+  `;
+  page++;
+}
+
+/* Start flow */
+askName();
+</script>
+</body>
+</html>
     #photo-text {
       margin-top: 20px;
       font-size: 28px;
